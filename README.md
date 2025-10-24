@@ -3,6 +3,7 @@ Chrome extension with tools for studying
 - Pomodoro Timer
 - Citation Generator
 - Quizzes
+- Summarizer
 
 ---===---
 
