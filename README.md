@@ -3,7 +3,7 @@ Chrome extension with tools for studying
   Pomodoro Timer
   Summarizer
   Citation Generator
-  TBD
+  Quizzes
 
 UW Madison Software Club Team 10
   Jason Carmichael
