@@ -10,7 +10,7 @@ Chrome extension with tools for studying
 UW Madison Software Club Team 10
 - Jason Carmichael (Lead)
 - Davy Fan
-- Miguel Lima Pereira 
+- Miguel Pereira Lima
 - Prithwiraj Purkait
 - Sharvin Malshe
 
