@@ -23,4 +23,4 @@ docker run -it --rm --name sunny-study-dev `
   -p 5173:5173 `
   -e CHOKIDAR_USEPOLLING=1 `
   -e CHOKIDAR_INTERVAL=200 `
-  node:24-alpine sh
+  node:latest sh
