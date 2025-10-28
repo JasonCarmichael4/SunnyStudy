@@ -16,14 +16,6 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     watch: { usePolling: true },
-
-    hmr: {
-      protocol: "ws",
-      host: "host.docker.internal",
-      port: 5173,
-      clientPort: 5173,
-    },
-
     origin: "http://localhost:5173",
   },
 

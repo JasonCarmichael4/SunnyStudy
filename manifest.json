@@ -6,15 +6,15 @@
 
 
   "action": {
-    "default_popup": "popup/index.html"
+    "default_popup": "src/popup/index.html"
   },
 
   "side_panel": {
-    "default_path": "sidePanel/index.html"
+    "default_path": "src/sidePanel/index.html"
   },
 
   "background": {
-    "service_worker": "scripts/background.ts",
+    "service_worker": "src/scripts/background.ts",
     "type": "module"
   },
 
