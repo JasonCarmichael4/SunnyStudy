@@ -5,17 +5,31 @@ import manifest from "./manifest.json";
 
 export default defineConfig({
   plugins: [react(), crx({ manifest })],
+
   build: {
     outDir: "dist",
-    sourcemap: true
+    sourcemap: true,
   },
+
   server: {
-    host: "0.0.0.0",
-    port: 5173
+    host: true,
+    port: 5173,
+    strictPort: true,
+    watch: { usePolling: true },
+
+    hmr: {
+      protocol: "ws",
+      host: "host.docker.internal",
+      port: 5173,
+      clientPort: 5173,
+    },
+
+    origin: "http://localhost:5173",
   },
+
   resolve: {
     alias: {
-      "@": "/src"
-    }
-  }
+      "@": "/src",
+    },
+  },
 });
