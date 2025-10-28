@@ -1,0 +1,12 @@
+{
+  "name": "SunnyStudy Dev",
+  "remoteUser": "node",
+  "runArgs": [
+    "-v", "${localWorkspaceFolder}:/app",
+    "-v", "sunny-study_node_modules:/app/node_modules",
+    "-p", "5173:5173",
+    "-e", "CHOKIDAR_USEPOLLING=1"
+  ],
+  "workspaceFolder": "/app",
+  "image": "node:latest"
+}
