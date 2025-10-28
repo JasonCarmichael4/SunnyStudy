@@ -11,14 +11,6 @@ export default defineConfig({
     sourcemap: true,
   },
 
-  server: {
-    host: true,
-    port: 5173,
-    strictPort: true,
-    watch: { usePolling: true },
-    origin: "http://localhost:5173",
-  },
-
   resolve: {
     alias: {
       "@": "/src",

@@ -3,28 +3,23 @@
   "name": "SunnyStudy",
   "description": "A study helper Chrome extension built with React and Vite.",
   "version": "1.0.0",
-
-
   "action": {
     "default_popup": "src/popup/index.html"
   },
-
   "side_panel": {
     "default_path": "src/sidePanel/index.html"
   },
-
   "background": {
     "service_worker": "src/scripts/background.ts",
     "type": "module"
   },
-
   "permissions": [
     "storage",
     "activeTab",
     "scripting",
-    "tabs"
+    "tabs",
+    "sidePanel"
   ],
-
   "host_permissions": [
     "<all_urls>"
   ]
