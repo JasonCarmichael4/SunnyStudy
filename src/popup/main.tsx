@@ -5,10 +5,10 @@ import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/styles.css';
 
+import Timer from '../sidePanel/components/Timer';
+
 const App: React.FC = () => (
-    <Container>
-        <h2>Placeholder</h2>
-    </Container>
+    <Timer />
 );
 
 createRoot(document.getElementById('root')!).render(<App />);
