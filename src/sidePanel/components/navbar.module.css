@@ -1,0 +1,48 @@
+:root {
+    --sf-green: #67f381;
+    --sf-yellow: #ffea70;
+    --sf-brown: #582d03;
+}
+
+.navBar {
+
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.navBarItems {
+
+    border-left: 2px solid #582d03;
+    border-top: 2px solid #582d03;
+    border-bottom: 2px solid #582d03;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-top-left-radius: 12px; 
+    border-top-right-radius: 12px;
+
+
+}
+
+.navBarItems:last-child {
+
+    border-right: 2px solid #582d03;
+
+}
+
+.navBarWrapper {
+
+    margin: 1em;
+    
+}
+
+
+@media screen and (max-width: 23.5em) {
+    .navBarItems {
+
+        font-size: small;
+
+    }
+}
