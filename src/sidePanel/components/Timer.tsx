@@ -1,44 +1,49 @@
-import React,  { useState, useEffect } from "react";
-import '../../styles/styles.css';
+import React, { useLayoutEffect, useState } from "react";
 
-const STUDY_TIME = 25 * 60; // 25 min in sec
-const BREAK_TIME = 5 * 60;
+export default function Timer() {
+    const [remaining, setRemaining] = useState<number | null>(null);
+    const [isBreak, setIsBreak] = useState<boolean | null>(null);
 
-const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-};
-
-const Timer: React.FC = () => {
-    const [started, setStarted] = useState(false);
-    const [onBreak, setOnBreak] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(STUDY_TIME);
-
-    useEffect(() => {
-        if (!started) {
-            console.log("Timer stopped");
-            return;
+    useLayoutEffect(() => {
+    const interval = setInterval(async () => {
+        const { timerEnd } = await chrome.storage.local.get("timerEnd");
+        const { mode } = await chrome.storage.local.get("mode");
+        if (timerEnd) {
+            const diff = timerEnd - Date.now();
+            setRemaining(diff > 0 ? diff : 0);
+        } else {
+            setRemaining(null);
         }
-  
-        const endTime = Date.now() + timeLeft * 1000;
+        if (mode) {
+            setIsBreak(mode === "break");
+        } else {
+            setIsBreak(null);
+        }
+    }, 1000);
 
-        console.log("Timer started at :", formatTime(timeLeft));
+    return () => clearInterval(interval);
+    }, []);
 
-        return;
-    }, [started]);
+    const startSession = () => {
+        chrome.runtime.sendMessage({ action: "startTimer", duration: 25 * 60 * 1000 });
+    };
+    const stopSession = () => chrome.runtime.sendMessage({ action: "stopTimer" });
 
+    const formatTime = (ms: number) => {
+        const totalSec = Math.floor(ms / 1000);
+        const min = Math.floor(totalSec / 60);
+        const sec = totalSec % 60;
+        return `${min}:${sec.toString().padStart(2, "0")}`;
+    };
 
     return (
-        <div className="timer-container">
-            <p>This is a placeholder for the timer functionality.</p>
-            <button type="button"
-                className={`btn ${started ? "btn-danger" : "btn-success"}`}
-                onClick={() => setStarted(!started)}>
-                {started ? "Stop" : "Start"}
-            </button>
-        </div>
+    <div>
+        <h3>Pomodoro Timer</h3>
+        <p>{remaining !== null ? formatTime(remaining) : "No active session"}</p>
+        <br/>
+        <p>{isBreak !== null ? (isBreak ? "Break Time" : "Work Time") : ""}</p>
+        <button onClick={startSession}>Start</button>
+        <button onClick={stopSession}>Stop</button>
+    </div>
     );
 }
-
-export default Timer;

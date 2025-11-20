@@ -18,7 +18,9 @@
     "activeTab",
     "scripting",
     "tabs",
-    "sidePanel"
+    "sidePanel",
+    "notifications",
+    "alarms"
   ],
   "host_permissions": [
     "<all_urls>"
