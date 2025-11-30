@@ -1,38 +1,69 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styles from "./navbar.module.css";
+import logo from '../../assets/images/6.png'
 
-const SideNavbar: React.FC = () => (
+import * as Icon from 'react-bootstrap-icons';
+
+const getSectionClasses = (currentPath, linkPath, elementStyle) => {
+
+    const isActive = currentPath === linkPath;
+    return isActive ? `${elementStyle.section} ${elementStyle.sectionActive}` : `${elementStyle.section}`
+
+}
+
+const SideNavbar: React.FC = () => {
+
+    const location = useLocation();
+    const currentPath = location.pathname;
+    
+    return (
+
     <Navbar className={styles.navBarWrapper}>
         <Nav className={styles.navBar}>
-            <Nav.Link as={NavLink} to="/flashcard" style={({isActive}) => ({
-                backgroundColor: isActive ? 'white' : 'darkgrey',
-                borderBottom: isActive ? 'none' : '',
-                color: isActive ? '#582d03' : ''
-            })} className={styles.navBarItems}>Flashcard</Nav.Link>
-            <Nav.Link as={NavLink} to="/citation" style={({isActive}) => ({
-                backgroundColor: isActive ? 'white' : 'darkgrey',
-                borderBottom: isActive ? 'none' : '',
-                color: isActive ? '#582d03' : ''
-            })} className={styles.navBarItems}>Citation</Nav.Link>
-            <Nav.Link as={NavLink} to="/quiz" style={({isActive}) => ({
-                backgroundColor: isActive ? 'white' : 'darkgrey',
-                borderBottom: isActive ? 'none' : '',
-                color: isActive ? '#582d03' : ''
-            })} className={styles.navBarItems}>Quiz</Nav.Link>
-            <Nav.Link as={NavLink} to="/summary" style={({isActive}) => ({
-                backgroundColor: isActive ? 'white' : 'darkgrey',
-                borderBottom: isActive ? 'none' : '',
-                color: isActive ? '#582d03' : ''
-            })} className={styles.navBarItems}>Summary</Nav.Link>
-            <Nav.Link as={NavLink} to="/info" style={({isActive}) => ({
-                backgroundColor: isActive ? 'white' : 'darkgrey',
-                borderBottom: isActive ? 'none' : '',
-                color: isActive ? '#582d03' : ''
-            })} className={styles.navBarItems}>Info</Nav.Link>
+            <div className={getSectionClasses(currentPath, '/flashcard', styles)}>
+                <Nav.Link id={"bazinga"} as={NavLink} to="/flashcard" className={styles.navBarItems}
+                active={currentPath === '/flashcard'}>
+                <Icon.CardText/>
+                </Nav.Link>
+                <img src={logo} alt="Active link background image"></img>
+            </div>
+
+            <div className={getSectionClasses(currentPath, '/citation', styles)}>
+                <Nav.Link id={"bazinga"} as={NavLink} to="/citation" className={styles.navBarItems}
+                active={currentPath === '/citation'}>
+                <Icon.Pencil/>
+                </Nav.Link>
+                <img src={logo} alt="Active link background image"></img>
+            </div>
+
+            <div className={getSectionClasses(currentPath, '/quiz', styles)}>
+                <Nav.Link id={"bazinga"} as={NavLink} to="/quiz" className={styles.navBarItems}
+                active={currentPath === '/quiz'}>
+                <Icon.PatchQuestion/>
+                </Nav.Link>
+                <img src={logo} alt="Active link background image"></img>
+            </div>
+
+            <div className={getSectionClasses(currentPath, '/summary', styles)}>
+                <Nav.Link id={"bazinga"} as={NavLink} to="/summary" className={styles.navBarItems}
+                active={currentPath === '/summary'}>
+                <Icon.Quote/>
+                </Nav.Link>
+                <img src={logo} alt="Active link background image"></img>
+            </div>
+
+            <div className={getSectionClasses(currentPath, '/info', styles)}>
+                <Nav.Link id={"bazinga"} as={NavLink} to="/info" className={styles.navBarItems}
+                active={currentPath === '/info'}>
+                <Icon.InfoCircle size={40} />
+                </Nav.Link>
+                <img src={logo} alt="Active link background image"></img>
+            </div>
         </Nav>
     </Navbar>
-);
+    )
+};
 
 export default SideNavbar;
