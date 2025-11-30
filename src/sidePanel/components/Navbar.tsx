@@ -35,7 +35,7 @@ const SideNavbar: React.FC = () => {
     <Navbar className={styles.navBarWrapper}>
         <Nav className={styles.navBar}>
             <div className={getSectionClasses(currentPath, '/flashcard', typedStyles)}>
-                <Nav.Link id={"bazinga"} as={NavLink} to="/flashcard" className={typedStyles.navBarItems}
+                <Nav.Link as={NavLink} to="/flashcard" className={typedStyles.navBarItems}
                 active={currentPath === '/flashcard'}>
                 <Icon.CardText/>
                 </Nav.Link>
@@ -43,7 +43,7 @@ const SideNavbar: React.FC = () => {
             </div>
 
             <div className={getSectionClasses(currentPath, '/citation', typedStyles)}>
-                <Nav.Link id={"bazinga"} as={NavLink} to="/citation" className={typedStyles.navBarItems}
+                <Nav.Link as={NavLink} to="/citation" className={typedStyles.navBarItems}
                 active={currentPath === '/citation'}>
                 <Icon.Pencil/>
                 </Nav.Link>
@@ -51,7 +51,7 @@ const SideNavbar: React.FC = () => {
             </div>
 
             <div className={getSectionClasses(currentPath, '/quiz', typedStyles)}>
-                <Nav.Link id={"bazinga"} as={NavLink} to="/quiz" className={typedStyles.navBarItems}
+                <Nav.Link as={NavLink} to="/quiz" className={typedStyles.navBarItems}
                 active={currentPath === '/quiz'}>
                 <Icon.PatchQuestion/>
                 </Nav.Link>
@@ -59,7 +59,7 @@ const SideNavbar: React.FC = () => {
             </div>
 
             <div className={getSectionClasses(currentPath, '/summary', typedStyles)}>
-                <Nav.Link id={"bazinga"} as={NavLink} to="/summary" className={typedStyles.navBarItems}
+                <Nav.Link as={NavLink} to="/summary" className={typedStyles.navBarItems}
                 active={currentPath === '/summary'}>
                 <Icon.Quote/>
                 </Nav.Link>
@@ -67,9 +67,9 @@ const SideNavbar: React.FC = () => {
             </div>
 
             <div className={getSectionClasses(currentPath, '/info', typedStyles)}>
-                <Nav.Link id={"bazinga"} as={NavLink} to="/info" className={typedStyles.navBarItems}
+                <Nav.Link as={NavLink} to="/info" className={typedStyles.navBarItems}
                 active={currentPath === '/info'}>
-                <Icon.InfoCircle size={40} />
+                <Icon.InfoCircle />
                 </Nav.Link>
                 <img src={backgroundImg} alt="Active link background image"></img>
             </div>
