@@ -28,7 +28,7 @@
 
 .sectionActive .navBarItems {
 
-    background-color: #ffea70;
+    background-color: var(--sf-yellow);
 
 }
 
@@ -59,7 +59,7 @@
 
     width: 30px;
     height: 30px;
-    color: #48e765;
+    color: #2ea844;
     transition: 500ms ease;
 
 }
@@ -68,6 +68,7 @@
 
     width: 40px;
     height: 40px;
+    color: #48e765;
 
 }
 
