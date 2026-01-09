@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useState } from "react";
+import Sunflower from "./SunflowerAnim";
 
 export default function Timer() {
     const [remaining, setRemaining] = useState<number | null>(null);
@@ -39,7 +40,9 @@ export default function Timer() {
     return (
     <div>
         <h3>Pomodoro Timer</h3>
-        <p>{remaining !== null ? formatTime(remaining) : "No active session"}</p>
+        
+        <Sunflower progress={remaining !== null ? (isBreak ? 0 : 1 - remaining / (25 * 60 * 1000)) : 0} />
+
         <br/>
         <p>{isBreak !== null ? (isBreak ? "Break Time" : "Work Time") : ""}</p>
         <button onClick={startSession}>Start</button>
