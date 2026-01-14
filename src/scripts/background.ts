@@ -18,6 +18,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, info) => {
 });
 
 // Timer functionality
+// listening to messages 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "startTimer") {
     startTimer("work", 25 * 60 * 1000);
@@ -46,7 +47,7 @@ function startTimer(mode: string, duration: number): void {
   chrome.storage.local.set({timerEnd: when, mode });
 }
 
-
+// responding to alarm events 
 chrome.alarms.onAlarm.addListener(alarm => {
   if (alarm.name === "pomodoroTimer") {
     chrome.storage.local.get(["mode"], data => {

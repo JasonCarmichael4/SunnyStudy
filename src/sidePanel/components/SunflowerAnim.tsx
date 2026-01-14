@@ -1,42 +1,71 @@
-import React from 'react';
-export default function Sunflower({ progress }: { progress: number }) {
-  // progress = 1 → fully up petals
-  // progress = 0 → petals folded down
+import React, { useMemo } from "react";
 
-  const petals = Array.from({ length: 12 });
+interface SunflowerProps {
+  progress: number;
+  isBreak?: boolean | null;
+}
 
+const Sunflower: React.FC<SunflowerProps> = ({ progress, isBreak }) => {
+  const centerX = 100;
+  const centerY = 100;
+
+  const numPetals = 20;
+  const petalLength = 50;
+  const petalWidth = 20;
+
+  
+  const petal = useMemo(() => {
+    return <path
+        transform={`
+          translate(${centerX}, ${centerY}) 
+          rotate(${-90 + progress * 360})
+        `}
+        
+        fill={isBreak ? "#6ab04c" : "#f9ca24"}
+        
+        stroke="#2e1d1a"
+        strokeWidth="1"
+
+        d="M 0,0 C 0,0 95,-20 100,0
+        C 100,0 95,20 0,0" />;
+  }, [progress, isBreak]);
+
+  const petals = useMemo(() => {
+    return Array.from({ length: numPetals }, (_, i) => {
+      const angle = (360 / numPetals) * i;
+
+      return React.cloneElement(petal, {
+        key: i,
+        transform: `
+          translate(${centerX}, ${centerY})
+          rotate(${angle + progress * 360})
+        `
+      });
+    });
+  }, [numPetals, petal, centerX, centerY, progress]);
+  
   return (
-    <svg
-      width="120"
-      height="120"
-      viewBox="0 0 120 120"
-      style={{ display: "block", margin: "0 auto" }}
+    <svg 
+      width="100%" 
+      height="100%" 
+      viewBox="0 0 200 200" 
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ overflow: 'visible' }}
     >
-      {/* CENTER */}
-      <circle cx="60" cy="60" r="18" fill="#6b3e1e" />
+      {/* Petals */}
+      {petals}
 
-      {/* PETALS */}
-      {petals.map((_, i) => {
-        const angle = i * (360 / petals.length);
-        const bend = (1 - progress) * 50; // degrees downward
-
-        return (
-          <rect
-            key={i}
-            x="58"
-            y="12"
-            width="4"
-            height="28"
-            rx="2"
-            fill="#f7d43b"
-            style={{
-              transformOrigin: "60px 60px",
-              transform: `rotate(${angle}deg) rotate(${bend}deg)`,
-              transition: "transform 0.3s linear",
-            }}
-          />
-        );
-      })}
+      {/* Center Disk (Seeds) */}
+      <circle 
+        cx={centerX} 
+        cy={centerY} 
+        r={20} 
+        fill={"#ae6f2f"}
+        stroke="#2e1d1a"
+        strokeWidth="2"
+      />
     </svg>
   );
-}
+};
+
+export default Sunflower;
