@@ -3,8 +3,7 @@ import { Container } from 'react-bootstrap';
 import SunflowerAnim from '../components/SunflowerAnim';
 
 const Info: React.FC = () => (
-    <SunflowerAnim>
-    </SunflowerAnim>
+    <div> </div>
 );
 
 export default Info;
