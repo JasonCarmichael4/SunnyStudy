@@ -15,6 +15,7 @@ const Sunflower: React.FC<SunflowerProps> = ({ progress, time, isBreak }) => {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   
+  // single petal design svg path
   const petal = useMemo(() => {
     return <path
         transform={`

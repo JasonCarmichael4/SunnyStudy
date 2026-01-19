@@ -37,8 +37,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     data => {
       console.log("Received message to start timer:", message);
       if (!data.timerStart) {
-        chrome.storage.local.set({timerStart: Date.now()}); // set start session time
-        startTimer(message.mode, message.duration); // start the timer
+        chrome.storage.local.set({timerStart: Date.now()}); //save the current time for end session calculation
+        startTimer(message.mode, message.duration);
         sendResponse({ status: "started" });
       }
       else {
@@ -55,7 +55,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function startTimer(mode: string, duration: number): void {
-  chrome.alarms.clear("pomodoroTimer", () => {
+  chrome.alarms.clear("pomodoroTimer", () => { // clear any existing alarms
     const when = Date.now() + duration;
     chrome.alarms.create("pomodoroTimer", { when });
     chrome.storage.local.set({timerEnd: when, duration, mode }); // create the variables in storage
@@ -71,14 +71,17 @@ function stopTimer(): void {
         id: crypto.randomUUID(),
         startTime: data.timerStart,
         endTime: Date.now()
-      });
+      }); //current session
     }
   });
+
+  //removes all timer related data
   chrome.alarms.clear("pomodoroTimer");
   chrome.storage.local.remove(["timerEnd", "duration", "mode"]);
   chrome.storage.local.remove("timerStart");
 }
 
+// save session to storage
 function saveSession(session: PomodoroSession): void {
   chrome.storage.local.get(["sessions"], data => {
     const sessions: PomodoroSession[] = data.sessions || [];  

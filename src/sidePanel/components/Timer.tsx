@@ -14,14 +14,15 @@ export default function Timer() {
             const { timerEnd, duration, mode } = await chrome.storage.local.get(["timerEnd", "duration", "mode"]);
 
             if (timerEnd) {
-                const diff = timerEnd - Date.now();
+                const diff = timerEnd - Date.now(); //time left
                 setRemaining(diff > 0 ? diff : 0);
                 if (duration) setTotalDuration(duration);
             } else {
                 setRemaining(null);
             }
+
             if (mode) {
-                setIsBreak(mode === "break");
+                setIsBreak(mode === "break"); 
             } else {
                 setIsBreak(null);
             }
@@ -42,6 +43,7 @@ export default function Timer() {
 
     const stopSession = () => chrome.runtime.sendMessage({ action: "stopTimer"});
 
+    // return formatted time MIN:SEC
     const formatTime = (ms: number) => {
         const totalSec = Math.floor(ms / 1000);
         const min = Math.floor(totalSec / 60);
@@ -58,6 +60,8 @@ export default function Timer() {
                 <Sunflower progress={progress} time={remaining !== null ? formatTime(remaining) : "00:00"} isBreak={isBreak} />
             </div>
             <p><b>{isBreak !== null ? (isBreak ? "Break!" : "Work!") : ""}</b></p>
+
+            {/* Control buttons TODO: change style*/}
             <button onClick={startSession}>Start</button>
             <button onClick={stopSession}>Stop</button>
         </div>
