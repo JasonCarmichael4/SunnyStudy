@@ -6,6 +6,11 @@ import backgroundImg from '../../assets/images/6.png'
 
 import * as Icon from 'react-bootstrap-icons';
 
+// This next part is tricky specifically because of TypeScript's reliance on type models. We are
+// just trying not to trip the language's "cosmetic errors" regarding elements of type "any".
+
+// An interface is deployed to specify to TypeScript exactly what type each following variable is.
+
 interface NavStyles {
 
     readonly section: string;
@@ -15,6 +20,10 @@ interface NavStyles {
     readonly navBar: string;
 
 }
+
+// The function figures whether the element is active or not by comparing the current path with the
+// element's anchor link. It then returns the correct class(es) given the nav bar item active 
+// or inactive state.
 
 const getSectionClasses = (currentPath: string, linkPath: string, elementStyle: NavStyles) => {
 

@@ -2,6 +2,8 @@
     --sf-green: #67f381;
     --sf-yellow: #ffea70;
     --sf-brown: #582d03;
+    --sf-darkergreen: #2ea844;
+    --sf-darkgreen: #48e765;
 }
 
 .navBar {
@@ -14,27 +16,22 @@
 
 .navBarItems {
 
-    border-left: 2px solid #582d03;
-    border-top: 2px solid #582d03;
-    background-color: #582d03;
-    border-bottom: 2px solid #582d03;
+    border-left: 2px solid var(--sf-brown);
+    border-top: 2px solid var(--sf-brown);
+    background-color: var(--sf-brown);
+    border-bottom: 2px solid var(--sf-brown);
     color: black;
     width: 100%;
     display: flex;
     justify-content: center;
     border-top-left-radius: 12px; 
     border-top-right-radius: 12px;
+    border-right: 2px solid var(--sf-brown);
 }
 
 .sectionActive .navBarItems {
 
     background-color: var(--sf-yellow);
-
-}
-
-.navBarItems:last-child {
-
-    border-right: 2px solid #582d03;
 
 }
 
@@ -59,7 +56,7 @@
 
     width: 30px;
     height: 30px;
-    color: #2ea844;
+    color: var(--sf-darkergreen);
     transition: 500ms ease;
 
 }
@@ -68,7 +65,7 @@
 
     width: 40px;
     height: 40px;
-    color: #48e765;
+    color: var(--sf-darkgreen);
 
 }
 
@@ -77,19 +74,17 @@
     position: absolute;
     top: 50;
     z-index: -1;
-    height: 120px;
-    width: 120px;
-    opacity: 0;
-    transition: 500ms ease;
+    height: 0px;
+    width: 0px;
+    transition: 300ms ease;
 }
 
 .sectionActive img {
 
-    opacity: 1;
+    height: 120px;
+    width: 120px;
+
 }
-
-
-
 
 @media screen and (max-width: 23.5em) {
     .navBarItems {
