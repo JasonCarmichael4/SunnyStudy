@@ -22,21 +22,33 @@ chrome.tabs.onUpdated.addListener(async (tabId, info) => {
 const WORK_DURATION = 2 * 60 * 1000;
 const BREAK_DURATION = 5 * 60 * 1000;
 
+type PomodoroSession = {
+  id: string;
+  startTime: number;
+  endTime: number;
+};
+
 // listening to messages 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "startTimer") {
-    startTimer("work", message.duration);
-    sendResponse({ status: "work started" });
-  }
-
-  if (message.action === "breakTimer") {
-    startTimer("break", message.duration);
-    sendResponse({ status: "break started" });
+    // start session if not already started
+    chrome.storage.local.get(
+    ["sessions", "timerStart"],
+    data => {
+      console.log("Received message to start timer:", message);
+      if (!data.timerStart) {
+        chrome.storage.local.set({timerStart: Date.now()}); // set start session time
+        startTimer(message.mode, message.duration); // start the timer
+        sendResponse({ status: "started" });
+      }
+      else {
+        sendResponse({ status: "already running" });
+      }
+    });
   }
 
   if (message.action === "stopTimer") {
-    chrome.alarms.clear("pomodoroTimer");
-    chrome.storage.local.remove(["timerEnd", "duration", "mode"]);
+    stopTimer();
     sendResponse({ status: "stopped" });
   }
   return true;
@@ -46,7 +58,34 @@ function startTimer(mode: string, duration: number): void {
   chrome.alarms.clear("pomodoroTimer", () => {
     const when = Date.now() + duration;
     chrome.alarms.create("pomodoroTimer", { when });
-    chrome.storage.local.set({ timerEnd: when, duration, mode });
+    chrome.storage.local.set({timerEnd: when, duration, mode }); // create the variables in storage
+  });
+}
+
+function stopTimer(): void {
+  chrome.storage.local.get(
+    ["timerStart"],
+    data => {
+    if (!data.timerStart) {
+      saveSession({
+        id: crypto.randomUUID(),
+        startTime: data.timerStart,
+        endTime: Date.now()
+      });
+    }
+  });
+  chrome.alarms.clear("pomodoroTimer");
+  chrome.storage.local.remove(["timerEnd", "duration", "mode"]);
+  chrome.storage.local.remove("timerStart");
+}
+
+function saveSession(session: PomodoroSession): void {
+  chrome.storage.local.get(["sessions"], data => {
+    const sessions: PomodoroSession[] = data.sessions || [];  
+    sessions.push(session);
+    chrome.storage.local.set({ sessions });
+    console.log("All sessions:", session);
+    console.log("All sessions:", data.sessions);
   });
 }
 
@@ -71,7 +110,7 @@ chrome.alarms.onAlarm.addListener(alarm => {
           type: "basic",
           iconUrl: "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png",
           title: "Back to Work!",
-          message: "Break finished. Starting next Pomodoro."
+          message: "Break finished. Time to get back to work!"
         });
       }
     });
