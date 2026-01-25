@@ -1,17 +1,90 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import styles from "./navbar.module.css";
+import backgroundImg from '../../assets/images/6.png'
 
-const SideNavbar: React.FC = () => (
-    <Navbar>
-        <Nav>
-            <Nav.Link as={NavLink} to="/flashcard">Flashcard</Nav.Link>
-            <Nav.Link as={NavLink} to="/citation">Citation</Nav.Link>
-            <Nav.Link as={NavLink} to="/quiz">Quiz</Nav.Link>
-            <Nav.Link as={NavLink} to="/summary">Summary</Nav.Link>
-            <Nav.Link as={NavLink} to="/info">Info</Nav.Link>
+import * as Icon from 'react-bootstrap-icons';
+
+// This next part is tricky specifically because of TypeScript's reliance on type models. We are
+// just trying not to trip the language's "cosmetic errors" regarding elements of type "any".
+
+// An interface is deployed to specify to TypeScript exactly what type each following variable is.
+
+interface NavStyles {
+
+    readonly section: string;
+    readonly sectionActive: string;
+    readonly navBarItems: string;
+    readonly navBarWrapper: string;
+    readonly navBar: string;
+
+}
+
+// The function figures whether the element is active or not by comparing the current path with the
+// element's anchor link. It then returns the correct class(es) given the nav bar item active 
+// or inactive state.
+
+const getSectionClasses = (currentPath: string, linkPath: string, elementStyle: NavStyles) => {
+
+    const isActive = currentPath === linkPath;
+    return isActive ? `${elementStyle.section} ${elementStyle.sectionActive}` : `${elementStyle.section}`
+
+}
+
+const SideNavbar: React.FC = () => {
+
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const typedStyles = styles as unknown as NavStyles;
+    
+    return (
+
+    <Navbar className={styles.navBarWrapper}>
+        <Nav className={styles.navBar}>
+            <div className={getSectionClasses(currentPath, '/flashcard', typedStyles)}>
+                <Nav.Link as={NavLink} to="/flashcard" className={typedStyles.navBarItems}
+                active={currentPath === '/flashcard'}>
+                <Icon.CardText/>
+                </Nav.Link>
+                <img src={backgroundImg} alt="Active link background image"></img>
+            </div>
+
+            <div className={getSectionClasses(currentPath, '/citation', typedStyles)}>
+                <Nav.Link as={NavLink} to="/citation" className={typedStyles.navBarItems}
+                active={currentPath === '/citation'}>
+                <Icon.Pencil/>
+                </Nav.Link>
+                <img src={backgroundImg} alt="Active link background image"></img>
+            </div>
+
+            <div className={getSectionClasses(currentPath, '/quiz', typedStyles)}>
+                <Nav.Link as={NavLink} to="/quiz" className={typedStyles.navBarItems}
+                active={currentPath === '/quiz'}>
+                <Icon.PatchQuestion/>
+                </Nav.Link>
+                <img src={backgroundImg} alt="Active link background image"></img>
+            </div>
+
+            <div className={getSectionClasses(currentPath, '/summary', typedStyles)}>
+                <Nav.Link as={NavLink} to="/summary" className={typedStyles.navBarItems}
+                active={currentPath === '/summary'}>
+                <Icon.Quote/>
+                </Nav.Link>
+                <img src={backgroundImg} alt="Active link background image"></img>
+            </div>
+
+            <div className={getSectionClasses(currentPath, '/info', typedStyles)}>
+                <Nav.Link as={NavLink} to="/info" className={typedStyles.navBarItems}
+                active={currentPath === '/info'}>
+                <Icon.InfoCircle />
+                </Nav.Link>
+                <img src={backgroundImg} alt="Active link background image"></img>
+            </div>
         </Nav>
     </Navbar>
-);
+    )
+};
 
 export default SideNavbar;
