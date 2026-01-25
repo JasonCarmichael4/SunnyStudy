@@ -1,10 +1,9 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import SunflowerAnim from '../components/SunflowerAnim';
 
 const Info: React.FC = () => (
-    <Container>
-        <h2>Placeholder</h2>
-    </Container>
+    <div> </div>
 );
 
 export default Info;
